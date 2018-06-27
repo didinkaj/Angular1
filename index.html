@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+
+<!--application initialisation-->
+
+<body  ng-app="toDoApp" ng-controller="toDoController">
+
+<h2>Data binding 1</h2>
+
+    <p>Name : <input type="text" ng-model="name"></p>
+
+<!--filter usage-->
+
+<h1>Hello {{name | uppercase }}</h1>
+
+<h2>Data binding 2</h2>
+
+
+<div ng-app="" ng-init="ksh=1;rate=102">
+
+    Kenya Shillings : <input type="number" ng-model="ksh">
+
+    Exchange Rate:    <input type="number" ng-model="rate"><br/><br/>
+
+    <!--currency filter-->
+
+    Total in dollar: {{ ksh / rate | currency }}
+
+</div>
+
+
+
+
+
+<h1>My Task List</h1>
+
+        <h3>Active ({{ tasks.length }})</h3>
+
+        <span ng-hide="tasks.length">You have no active tasks!</span>
+
+        <div ng-repeat="task in tasks">
+
+            <input type="checkbox" ng-click="markcomplete($index, tasks, completed)" /> <!--- marking a task complete -->
+
+            {{ task.id }} {{ task.name }}
+
+            <button ng-click="deleteTask(task)">X</button>
+        </div>
+
+
+
+        <div ng-show="completed.length">
+
+            <h3>Completed ({{ completed.length }})</h3>
+
+            <div ng-repeat="task in completed">
+
+                <input type="checkbox" ng-click="markcomplete($index, completed, tasks)" checked /> <!--- marking a task uncomplete -->
+
+                <span class="complete">{{task.id }} {{ task.name }}</span>
+
+                <br />
+            </div>
+        </div>
+
+<h2>Add a Task</h2>
+
+<form ng-submit="addTask()">
+
+    <input type="text" placeholder="Description" ng-model="newTaskName" />
+
+    <input type="submit" value="Add" />
+</form><br/>
+
+
+
+<script>
+
+//    controller implementation
+
+    angular.module('toDoApp', [])
+
+        .controller('toDoController', ['$scope', function($scope) {
+
+            $scope.tasks = [{
+                id:1,
+                name:'study angular',
+                date:"2/3/2018"
+
+            },
+                {
+                    id:2,
+                    name:'study node',
+                    date:"2/3/2018"
+
+                },
+                {
+                    id:3,
+                    name:'Project a',
+                    date:"2/3/2018"
+
+                }
+            ];
+            $scope.completed = [];
+
+            $scope.newTaskName = '';
+
+
+ //adding a task to task list
+
+            $scope.addTask = function() {
+
+                var name = $scope.newTaskName;
+
+                let id = this.tasks.length +1;
+
+                let date = new Date();
+
+                if (name && $scope.tasks.indexOf(name) == -1 && $scope.completed.indexOf(name)) {
+
+                    $scope.tasks.push({
+                        name:name,
+                        id:id,
+                        date:date
+                    });
+
+                    $scope.newTaskName = '';
+                }
+            };
+//-----deleting a task
+            $scope.deleteTask = function(task){
+
+                this.tasks.pop(task);
+
+            }
+
+ //-------------scope--------
+
+            $scope.markcomplete = function(index, start, end) {
+
+                end.push(start[index]);
+
+                start.splice(index, 1);
+            }
+        }]);
+</script>
+</body>
+</html>
