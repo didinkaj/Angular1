@@ -51,10 +51,10 @@
         </div>
 
 
-
+<!--completed tasks-->
         <div ng-show="completed.length">
 
-            <h3>Completed ({{ completed.length }})</h3>
+            <h3>Completed Tasks  ({{ completed.length }})</h3>
 
             <div ng-repeat="task in completed">
 
@@ -65,6 +65,8 @@
                 <br />
             </div>
         </div>
+
+<!--adding new task-->
 
 <h2>Add a Task</h2>
 
@@ -137,13 +139,13 @@
 
             }
 
- //-------------scope--------
+ //-------------scope-------- using inbuilt array functions push and splice- add/remove items from array and return removed items
 
-            $scope.markcomplete = function(index, start, end) {
+            $scope.markcomplete = function(index, completedTaskArray, pendingTaskArray) {
 
-                end.push(start[index]);
+                pendingTaskArray.push(completedTaskArray[index]);
 
-                start.splice(index, 1);
+                completedTaskArray.splice(index, 1);
             }
         }]);
 </script>
