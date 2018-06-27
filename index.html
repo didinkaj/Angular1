@@ -37,34 +37,64 @@
 
 <h1>My Task List</h1>
 
-        <h3>Active ({{ tasks.length }})</h3>
+    <table cellpadding="10px">
 
-        <span ng-hide="tasks.length">You have no active tasks!</span>
+        <tr>
 
-        <div ng-repeat="task in tasks">
+            <th colspan="4">Active Tasks ({{ tasks.length }})</th>
 
-            <input type="checkbox" ng-click="markcomplete($index, tasks, completed)" /> <!--- marking a task complete -->
+        </tr>
+        <!--ng hide directive-->
+        <tr ng-hide="tasks.length">
 
-            {{ task.id }} {{ task.name }}
+            <td colspan="4"> You have no active tasks!</td>
 
-            <button ng-click="deleteTask(task)">X</button>
-        </div>
+        </tr>
+
+        <tr ng-repeat="task in tasks">
+
+            <td><input type="checkbox" ng-click="markcomplete($index, tasks, completed)" /></td>
+
+            <td>{{ task.id }}</td>
+
+            <td>{{ task.name }}</td>
+
+            <td>{{ task.date }}</td>
+
+            <td> <button ng-click="deleteTask(task)" style="color: white;background-color:red">X</button></td>
+
+        </tr>
+
+
+    </table><br/>
+
+
 
 
 <!--completed tasks-->
-        <div ng-show="completed.length">
 
-            <h3>Completed Tasks  ({{ completed.length }})</h3>
+        <table cellpadding="10px" >
 
-            <div ng-repeat="task in completed">
+            <tr ng-show="completed.length">
 
-                <input type="checkbox" ng-click="markcomplete($index, completed, tasks)" checked /> <!--- marking a task uncomplete -->
+                <th colspan="4">Completed Tasks  ({{ completed.length }})</th>
 
-                <span class="complete">{{task.id }} {{ task.name }}</span>
+            </tr>
 
-                <br />
-            </div>
-        </div>
+            <tr ng-repeat="task in completed">
+
+                <td><input type="checkbox" ng-click="markcomplete($index, completed, tasks)" checked /></td>
+
+                <td>{{task.id }}</td>
+
+                <td>{{ task.name }}</td>
+
+                <td>{{ task.date }}</td>
+
+            </tr>
+
+
+        </table>
 
 <!--adding new task-->
 
@@ -74,7 +104,7 @@
 
     <input type="text" placeholder="Description" ng-model="newTaskName" />
 
-    <input type="submit" value="Add" />
+    <input type="submit" value="Add" style="color: white;background-color:green"/>
 </form><br/>
 
 
@@ -90,19 +120,19 @@
             $scope.tasks = [{
                 id:1,
                 name:'study angular',
-                date:"2/3/2018"
+                date:"27/6/2018"
 
             },
                 {
                     id:2,
                     name:'study node',
-                    date:"2/3/2018"
+                    date:"27/6/2018"
 
                 },
                 {
                     id:3,
                     name:'Project a',
-                    date:"2/3/2018"
+                    date:"27/6/2018"
 
                 }
             ];
