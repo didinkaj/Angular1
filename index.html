@@ -1,77 +1,95 @@
 <!doctype html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
 </head>
 
 <!--application initialisation-->
 
-<body  ng-app="toDoApp" ng-controller="toDoController">
-
-<h1>Basic Angular Js</h1>
-
-    <p>Name : <input type="text" ng-model="name"></p>
-
-<!--filter usage-->
-
-<h1>Hello {{name | uppercase }}</h1>
-
-<h2>Currency Exchange</h2>
+<body  ng-app="toDoApp">
 
 
-<div ng-app="" ng-init="ksh=1;rate=102">
+<div>
 
-    Kenya Shillings : <input type="number" ng-model="ksh">
+    <ul>
+        <li><a href="#/">Index</a></li>
+        <li><a href="#calculator">Calculator</a></li>
+        <li><a href="#tasks">Tasks</a></li>
+    </ul>
 
-    Exchange Rate:    <input type="number" ng-model="rate"><br/><br/>
+    <div ng-view></div>
 
-    <!--currency filter-->
+    <script type="text/ng-template" id="index.html">
 
-    Total in dollar: {{ ksh / rate | currency }}
+        <p>Index</p>
+    </script>
 
-</div>
+    <script type="text/ng-template" id="calculator.html">
+
+        <div ng-init="ksh=1;rate=102">
+
+            <h1>Basic Angular Js</h1>
+
+            <!--Two way data binding-->
+            <p>Name : <input type="text" ng-model="name"></p>
+
+            <!--filter usage-->
+
+            <h1>Hello {{name | uppercase }}</h1>
+
+            <h2>Currency Exchange</h2>
+
+            Kenya Shillings : <input type="number" ng-model="ksh">
+
+            Exchange Rate:    <input type="number" ng-model="rate"><br/><br/>
+
+            <!--currency filter-->
+
+            Total in dollar: {{ ksh / rate | currency }}
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="tasks.html">
+
+        <h1>My Task List</h1>
+
+        <table cellpadding="10px">
+
+            <tr>
+
+                <th colspan="4">Active Tasks ({{ tasks.length }})</th>
+
+            </tr>
+            <!--ng hide directive-->
+            <tr ng-hide="tasks.length">
+
+                <td colspan="5"> You have no active tasks!</td>
+
+            </tr>
+
+            <tr ng-repeat="task in tasks">
+
+                <td><input type="checkbox" ng-click="markcomplete($index, tasks, completed)" /></td>
+
+                <td>{{ task.id }}</td>
+
+                <td>{{ task.name }}</td>
+
+                <td>{{ task.date }}</td>
+
+                <td> <button ng-click="deleteTask(task)" style="color: white;background-color:red">X</button></td>
+
+            </tr>
+
+
+        </table><br/>
 
 
 
 
-
-<h1>My Task List</h1>
-
-    <table cellpadding="10px">
-
-        <tr>
-
-            <th colspan="4">Active Tasks ({{ tasks.length }})</th>
-
-        </tr>
-        <!--ng hide directive-->
-        <tr ng-hide="tasks.length">
-
-            <td colspan="5"> You have no active tasks!</td>
-
-        </tr>
-
-        <tr ng-repeat="task in tasks">
-
-            <td><input type="checkbox" ng-click="markcomplete($index, tasks, completed)" /></td>
-
-            <td>{{ task.id }}</td>
-
-            <td>{{ task.name }}</td>
-
-            <td>{{ task.date }}</td>
-
-            <td> <button ng-click="deleteTask(task)" style="color: white;background-color:red">X</button></td>
-
-        </tr>
-
-
-    </table><br/>
-
-
-
-
-<!--completed tasks-->
+        <!--completed tasks-->
 
         <table cellpadding="10px" >
 
@@ -96,88 +114,24 @@
 
         </table>
 
-<!--adding new task-->
+        <!--adding new task-->
 
-<h2>Add a Task</h2>
+        <h2>Add a Task</h2>
 
-<form ng-submit="addTask()">
+        <form ng-submit="addTask()">
 
-    <input type="text" placeholder="Description" ng-model="newTaskName" />
+            <input type="text" placeholder="Description" ng-model="newTaskName" />
 
-    <input type="submit" value="Add" style="color: white;background-color:green"/>
-</form><br/>
+            <input type="submit" value="Add" style="color: white;background-color:green"/>
+        </form><br/>
 
+    </script>
 
-
-<script>
-
-//    controller implementation
-
-    angular.module('toDoApp', [])
-
-        .controller('toDoController', ['$scope', function($scope) {
-
-            $scope.tasks = [{
-                id:1,
-                name:'study angular',
-                date:"27/6/2018"
-
-            },
-                {
-                    id:2,
-                    name:'study node',
-                    date:"27/6/2018"
-
-                },
-                {
-                    id:3,
-                    name:'Project a',
-                    date:"27/6/2018"
-
-                }
-            ];
-            $scope.completed = [];
-
-            $scope.newTaskName = '';
+</div>
 
 
- //adding a task to task list
 
-            $scope.addTask = function() {
 
-                var name = $scope.newTaskName;
-
-                let id = this.tasks.length +1;
-
-                let date = new Date();
-
-                if (name && $scope.tasks.indexOf(name) == -1 && $scope.completed.indexOf(name)) {
-
-                    $scope.tasks.push({
-                        name:name,
-                        id:id,
-                        date:date
-                    });
-
-                    $scope.newTaskName = '';
-                }
-            };
-//-----deleting a task
-            $scope.deleteTask = function(task){
-
-                this.tasks.pop(task);
-
-            }
-
- //-------------scope-------- using inbuilt array functions push and splice- add/remove items from array and return removed items
-
-            $scope.markcomplete = function(index, completedTaskArray, pendingTaskArray) {
-
-                pendingTaskArray.push(completedTaskArray[index]);
-
-                completedTaskArray.splice(index, 1);
-            }
-        }]);
-</script>
+<script src="app.js"></script>
 </body>
 </html>
