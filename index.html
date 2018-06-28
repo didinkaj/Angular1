@@ -18,12 +18,17 @@
         <li><a href="#tasks">Tasks</a></li>
     </ul>
 
+    <!--index page template-->
     <div ng-view></div>
 
     <script type="text/ng-template" id="index.html">
+        <h1>Welcome to Angular 1 sample task</h1>
+        <p>This is a basic todo application and currecy calculator</p>
+        <p>Custom filter in search</p>
 
-        <p>Index</p>
     </script>
+
+    <!--calculator view-->
 
     <script type="text/ng-template" id="calculator.html">
 
@@ -46,10 +51,13 @@
 
             <!--currency filter-->
 
-            Total in dollar: {{ ksh / rate | currency }}
+            Amount {{ ksh | filter:kenyashilling }} = dollars: {{ ksh / rate | currency }}
+
 
         </div>
     </script>
+
+    <!--Task view-->
 
     <script type="text/ng-template" id="tasks.html">
 
@@ -60,6 +68,7 @@
             <tr>
 
                 <th colspan="4">Active Tasks ({{ tasks.length }})</th>
+                <td><input type="text" ng-model="task"></td>
 
             </tr>
             <!--ng hide directive-->
@@ -67,9 +76,10 @@
 
                 <td colspan="5"> You have no active tasks!</td>
 
+
             </tr>
 
-            <tr ng-repeat="task in tasks">
+            <tr ng-repeat="task in tasks |  filter : task">
 
                 <td><input type="checkbox" ng-click="markcomplete($index, tasks, completed)" /></td>
 
@@ -85,8 +95,6 @@
 
 
         </table><br/>
-
-
 
 
         <!--completed tasks-->

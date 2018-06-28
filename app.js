@@ -93,6 +93,9 @@ app.controller('toDoController', ['$scope', function($scope) {
     }
 
 // Add Custom filters
+    $scope.searchTask = function (dollars) {
+        
+    }
 
 
 }]);
