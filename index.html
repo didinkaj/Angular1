@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/html">
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
-    <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
 </head>
 
 <!--application initialisation-->
 
-<body  ng-app="toDoApp">
+<body ng-app="toDoApp">
 
 
 <div>
@@ -47,7 +47,7 @@
 
             Kenya Shillings : <input type="number" ng-model="ksh">
 
-            Exchange Rate:    <input type="number" ng-model="rate"><br/><br/>
+            Exchange Rate: <input type="number" ng-model="rate"><br/><br/>
 
             <!--currency filter-->
 
@@ -79,9 +79,9 @@
 
             </tr>
 
-            <tr ng-repeat="task in tasks |  filter : task">
+            <tr ng-repeat="task in tasks |  filter:task">
 
-                <td><input type="checkbox" ng-click="markcomplete($index, tasks, completed)" /></td>
+                <td><input type="checkbox" ng-click="markcomplete($index, tasks, completed)"/></td>
 
                 <td>{{ task.id }}</td>
 
@@ -89,7 +89,9 @@
 
                 <td>{{ task.date }}</td>
 
-                <td> <button ng-click="deleteTask(task)" style="color: white;background-color:red">X</button></td>
+                <td>
+                    <button ng-click="deleteTask(task)" style="color: white;background-color:red">X</button>
+                </td>
 
             </tr>
 
@@ -99,17 +101,17 @@
 
         <!--completed tasks-->
 
-        <table cellpadding="10px" >
+        <table cellpadding="10px">
 
             <tr ng-show="completed.length">
 
-                <th colspan="4">Completed Tasks  ({{ completed.length }})</th>
+                <th colspan="4">Completed Tasks ({{ completed.length }})</th>
 
             </tr>
 
             <tr ng-repeat="task in completed">
 
-                <td><input type="checkbox" ng-click="markcomplete($index, completed, tasks)" checked /></td>
+                <td><input type="checkbox" ng-click="markcomplete($index, completed, tasks)" checked/></td>
 
                 <td>{{task.id }}</td>
 
@@ -128,7 +130,7 @@
 
         <form ng-submit="addTask()">
 
-            <input type="text" placeholder="Description" ng-model="newTaskName" />
+            <input type="text" placeholder="Description" ng-model="newTaskName"/>
 
             <input type="submit" value="Add" style="color: white;background-color:green"/>
         </form><br/>
@@ -136,8 +138,6 @@
     </script>
 
 </div>
-
-
 
 
 <script src="app.js"></script>
