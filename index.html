@@ -51,7 +51,7 @@
 
             <!--currency filter-->
 
-            Amount {{ ksh | filter:kenyashilling }} = dollars: {{ ksh / rate | currency }}
+            Amount {{ ksh | kenyashilling:ksh }} = dollars: {{ ksh / rate | currency }}
 
 
         </div>

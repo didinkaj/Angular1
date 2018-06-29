@@ -92,10 +92,34 @@ app.controller('toDoController', ['$scope', function($scope) {
         completedTaskArray.splice(index, 1);
     }
 
-// Add Custom filters
-    $scope.searchTask = function (dollars) {
-        
-    }
 
 
 }]);
+
+// Add Custom filters
+
+
+app.filter('kenyashilling', function() {
+
+
+    return function(number) {
+
+
+
+        return 'ksh' + number;
+
+
+    }
+});
+
+//search tasks
+app.filter("searchTask", function () {
+        return function (tasks, value) {
+
+
+            return tasks.filter(tasks => tasks.name.toLowerCase().indexOf(value.toLowerCase()) !== -1)
+
+
+        }
+    }
+);
